@@ -44,12 +44,27 @@ class Pie extends React.Component {
         }
       }
     };
+    
+    // Example of registering an handler to the 'draw' event
+    var listener = {
+      draw: (data) => {
+        if (data.type === "point") {
+          data.element.replace(new Chartist.Svg('image', {
+            height: 32,
+            width: 32,
+            x: data.x - (32 / 2),
+            y: data.y - (32 / 2),
+            "xlink:href": 'http://icons.iconarchive.com/icons/ergosign/free-spring/32/strawberry-icon.png'
+          }));
+        }
+      }
+    };
 
     var type = 'Bar'
 
     return (
       <div>
-        <ChartistGraph data={data} options={options} type={type} />
+        <ChartistGraph data={data} options={options} type={type} listener={listener} />
       </div>
     )
   }
@@ -59,7 +74,7 @@ ReactDOM.render(<Pie />, document.body)
 
 ```
 
-### Options
+### Properties
 
 Please check out [Chartist.js API documentation](http://gionkunz.github.io/chartist-js/api-documentation.html) for more details of the options.
 
@@ -68,6 +83,7 @@ Please check out [Chartist.js API documentation](http://gionkunz.github.io/chart
 * style - inline css styles (optional)
 * options - chart options (optional)
 * responsive-options - chart responsive options (optional)
+* listener - An object used to register event handlers (optional)
 
 To add support for aspect ratio
 
